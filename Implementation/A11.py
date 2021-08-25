@@ -7,7 +7,7 @@ N = int(input())
 K = int(input())
 
 board = [[0] * (N + 1) for _ in range(N + 1)]
-dir = {}
+rotate = {}
 time = 0
 head = [1, 1, 0] # 행, 열, 방향
 body = deque()
@@ -20,24 +20,24 @@ L = int(input())
 for _ in range(L):
     X, C = map(str, input().split())
     if C == 'L':
-        dir[int(X)] = -1
+        rotate[int(X)] = -1
     elif C == 'D':
-        dir[int(X)] = 1
+        rotate[int(X)] = 1
 body.append((1,1))
 
 while True:
     time += 1
     d = head[2]
     nrow, ncol = head[0] + drow[d], head[1] + dcol[d]
-    if not 1 <= nrow <= N or not 1 <= ncol <= N or (nrow, ncol) in body:
+    if not 1 <= nrow <= N or not 1 <= ncol <= N or (nrow, ncol) in body: # 벽 또는 자신의 몸을 만났을 때
         print(time)
         break
     head[0], head[1] = nrow, ncol
-    if board[nrow][ncol] == 1:
+    if board[nrow][ncol] == 1: # 사과를 만났을 때
         body.append((nrow, ncol))
         board[nrow][ncol] = 0
-    else:
+    else: # 아무 것도 없는 칸으로 이동하였을 때
         body.append((nrow, ncol))
         body.popleft()
-    if time in dir:
-        head[2] = (head[2] + dir[time]) % 4
+    if time in rotate: # time일 때 방향 변환이 있을 경우
+        head[2] = (head[2] + rotate[time]) % 4

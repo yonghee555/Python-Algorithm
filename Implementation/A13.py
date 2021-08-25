@@ -13,9 +13,9 @@ for i in range(N):
             home.append((i, j))
         elif row[j] == 2:
             chicken.append((i, j))
-answer = []
+answer = [] # 치킨 거리를 담는 배열
 for comb in combinations(chicken, M):
-    sum = 0
+    sum = 0 # 치킨 거리
     for h in home:
         dis = 100
         for c in comb:
